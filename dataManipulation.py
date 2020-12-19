@@ -134,3 +134,41 @@ ages_arr = ages_arr.reshape((1,45)) # reshape the ages_arr = (45,1)
 heights_arr = heights_arr.reshape((1,45)) # reshape the heights_arr = ages_arr
 heights_and_ages_arr = np.concatenate((heights_arr, ages_arr), axis = 0)
 print("using .concatenate to stack arrays vertically instead of .vstack", '\n', heights_and_ages_arr[:,:3], '\n')
+
+###################################
+# doing math operations on arrays #
+###################################
+
+# converting the height array from cm to ft
+print("Height array converted to Feet\n")
+print(heights_arr * 0.0328084) # multiplying by the number of feet in a cm
+
+# summing all the elems in an array using sum()
+print("the sum of the heights and ages array is\n", heights_and_ages_arr.sum())
+
+# sum the elems of the height and ages array separately using sum(axis)
+# sum(axis=0) computes the sum for each column
+# sum(axis=1) computes the sum for each row
+heights_arr = heights_arr.reshape((45, 1)) # reshape to have 45 rows and 1 column
+ages_arr = ages_arr.reshape((45, 1))
+heights_and_ages_arr = np.hstack((heights_arr, ages_arr)) # stacks the two arrays on top of each other
+print("The sum of all of the heights in the heights and ages array is\n", heights_and_ages_arr.sum(axis=0))
+
+# Comparisons
+# Getting the ages of each president < 55
+# can use ==, !=, >=, <=, <, >
+# returns an array of booleans
+
+heights_and_ages_arr = np.hstack((heights_arr, ages_arr)) # stacks heights on top of ages
+print("All the presidents who are less than 55\n", heights_and_ages_arr[:, 1] < 55) # [:, 1] checks all of the elems in index 1
+
+# check how many rows (number of presidents) satisfy the condition using .sum()
+print("There are", (heights_and_ages_arr[:,1] == 55).sum(), "that were 55 years old\n")
+
+# Masking and Subsetting
+# Using a mask of boolean values to filter out an array
+
+mask = (heights_and_ages_arr[:,0] >= 182).sum() # all the presidents that are taller than or equal to 182 cm
+tall_presidents = heights_and_ages_arr[mask,] # the mask filters out all of the short presidents creating a subarray of the heights and ages array
+print("An array of all of the tall preseidents (>= 182cm)", tall_presidents.shape)
+
